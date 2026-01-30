@@ -4,10 +4,8 @@ const fs = require("fs");
 async function main() {
   console.log("🚀 Deploying VehicleServiceHistory contract...\n");
 
-  // Get the contract factory
   const VehicleServiceHistory = await hre.ethers.getContractFactory("VehicleServiceHistory");
-  
-  // Deploy the contract
+
   const vehicleService = await VehicleServiceHistory.deploy();
   await vehicleService.deployed();
 
@@ -16,7 +14,6 @@ async function main() {
   console.log("👤 Deployed by:", (await hre.ethers.getSigners())[0].address);
   console.log("\n" + "=".repeat(60) + "\n");
 
-  // Save deployment info
   const deploymentInfo = {
     contractAddress: vehicleService.address,
     deployer: (await hre.ethers.getSigners())[0].address,

@@ -6,7 +6,6 @@ async function main() {
   console.log("🚗 Vehicle Service History - Blockchain Demo");
   console.log("=".repeat(70) + "\n");
 
-  // Load deployment info
   let contractAddress;
   try {
     const deploymentInfo = JSON.parse(fs.readFileSync("deployment-info.json", "utf8"));
@@ -18,11 +17,9 @@ async function main() {
     process.exit(1);
   }
 
-  // Get contract instance
   const VehicleServiceHistory = await hre.ethers.getContractFactory("VehicleServiceHistory");
   const vehicleService = await VehicleServiceHistory.attach(contractAddress);
 
-  // Get test accounts
   const [owner, serviceCenter1, serviceCenter2, buyer] = await hre.ethers.getSigners();
 
   console.log("\n👥 Accounts:");
@@ -31,7 +28,6 @@ async function main() {
   console.log("   Service Center 2:", serviceCenter2.address);
   console.log("   Buyer:           ", buyer.address);
 
-  // Step 1: Add Service Centers
   console.log("\n" + "=".repeat(70));
   console.log("📋 STEP 1: Adding Authorized Service Centers");
   console.log("=".repeat(70));
@@ -52,14 +48,12 @@ async function main() {
   await tx.wait();
   console.log("✅ Premium Service Center authorized");
 
-  // Verify authorization
   const isAuth1 = await vehicleService.isAuthorizedCenter(serviceCenter1.address);
   const isAuth2 = await vehicleService.isAuthorizedCenter(serviceCenter2.address);
   console.log("\n✓ Verification:");
   console.log("   Quick Fix Auto authorized:", isAuth1);
   console.log("   Premium Service authorized:", isAuth2);
 
-  // Step 2: Add Service Records
   console.log("\n" + "=".repeat(70));
   console.log("📝 STEP 2: Adding Service Records for Vehicle ABC123");
   console.log("=".repeat(70));
@@ -106,7 +100,6 @@ async function main() {
   await tx.wait();
   console.log("✅ Record added at 65,000 km");
 
-  // Step 3: Retrieve and Display History
   console.log("\n" + "=".repeat(70));
   console.log("🔍 STEP 3: Buyer Verifying Service History");
   console.log("=".repeat(70));
@@ -133,7 +126,6 @@ async function main() {
     console.log();
   }
 
-  // Step 4: Demonstrate Security Features
   console.log("=".repeat(70));
   console.log("🔒 STEP 4: Demonstrating Security Features");
   console.log("=".repeat(70));
@@ -173,7 +165,6 @@ async function main() {
   console.log("✅ Records are immutable - cannot be modified once written");
   console.log("✅ All changes are permanently recorded on blockchain");
 
-  // Summary
   console.log("\n" + "=".repeat(70));
   console.log("📊 DEMO SUMMARY");
   console.log("=".repeat(70));
